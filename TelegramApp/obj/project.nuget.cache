@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "IxYL414qfMDfkuylqOxMlgY8RbHqJbJhZm7h5yMCw+N+5ultevxqxbysocImIfEpAAxAUorgYamfdwxuvfhYPg==",
+  "success": true,
+  "projectFilePath": "I:\\Project_Jounik\\TelegramApp\\TelegramApp\\TelegramApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jouni\\.nuget\\packages\\tlsharp\\0.1.0.574\\tlsharp.0.1.0.574.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'TLSharp 0.1.0.574' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "TLSharp",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
+}
