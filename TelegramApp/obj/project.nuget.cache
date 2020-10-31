@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IxYL414qfMDfkuylqOxMlgY8RbHqJbJhZm7h5yMCw+N+5ultevxqxbysocImIfEpAAxAUorgYamfdwxuvfhYPg==",
+  "dgSpecHash": "AFlLWKRYD6hJa/t9x9uYlsyhe+H2ISgj0V9FcQ53P+yYpGFSJhOKXK65PFSd6KSKWAZRTYUqhsaKz5hVO8uRWg==",
   "success": true,
-  "projectFilePath": "I:\\Project_Jounik\\TelegramApp\\TelegramApp\\TelegramApp.csproj",
+  "projectFilePath": "D:\\Repos\\-telegaApp\\TelegramApp\\TelegramApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jouni\\.nuget\\packages\\tlsharp\\0.1.0.574\\tlsharp.0.1.0.574.nupkg.sha512"
   ],
