@@ -1,0 +1,112 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "TLSharp/0.1.0.574": {
+        "type": "package",
+        "compile": {
+          "lib/net46/TLSharp.Core.dll": {},
+          "lib/net46/TeleSharp.TL.dll": {}
+        },
+        "runtime": {
+          "lib/net46/TLSharp.Core.dll": {},
+          "lib/net46/TeleSharp.TL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TLSharp/0.1.0.574": {
+      "sha512": "OzLvXyTIZsHkJbX3iZRSb1vQdnkyO5yNcdPK80Snbrpm4kab59FdtijFGQRhe2NVjjKe5TabzxNPH3M0B64Lyw==",
+      "type": "package",
+      "path": "tlsharp/0.1.0.574",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/TeleSharp.TL.dll",
+        "lib/net46/TLSharp.Core.dll",
+        "lib/net46/TeleSharp.TL.dll",
+        "tlsharp.0.1.0.574.nupkg.sha512",
+        "tlsharp.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "TLSharp >= 0.1.0.574"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Jouni\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\Repos\\-telegaApp\\TelegramApp\\TelegramApp.csproj",
+      "projectName": "TelegramApp",
+      "projectPath": "D:\\Repos\\-telegaApp\\TelegramApp\\TelegramApp.csproj",
+      "packagesPath": "C:\\Users\\Jouni\\.nuget\\packages\\",
+      "outputPath": "D:\\Repos\\-telegaApp\\TelegramApp\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Jouni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "dependencies": {
+          "TLSharp": {
+            "target": "Package",
+            "version": "[0.1.0.574, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'TLSharp 0.1.0.574' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "TLSharp",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
+}
