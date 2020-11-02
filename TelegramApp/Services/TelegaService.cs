@@ -34,7 +34,7 @@ namespace TelegramApp.Services
             }
             catch (MissingApiConfigurationException ex)
             {
-                throw new Exception($"Please add your API settings to the `app.config` file. (More info: {MissingApiConfigurationException.InfoUrl})",
+                throw new Exception($"Please add your API settings to the `app.config.json` file.",
                     ex);
             }
         }
@@ -58,7 +58,7 @@ namespace TelegramApp.Services
 
             var hash = await client.SendCodeRequestAsync(NumberToAuthenticate);
 
-            Console.WriteLine("Ввести код из приложения: ");
+            Console.WriteLine("Enter SMS/Telegram code: ");
             var code = Console.ReadLine();
 
             if (String.IsNullOrWhiteSpace(code))
@@ -66,7 +66,7 @@ namespace TelegramApp.Services
                 Console.WriteLine("CodeToAuthenticate is empty in the app.config file, fill it with the code you just got now by SMS/Telegram");
             }
 
-            Console.WriteLine("Попытка получения пользователя");
+            Console.WriteLine("Getting user...");
             TLUser user = null;
             try
             {
