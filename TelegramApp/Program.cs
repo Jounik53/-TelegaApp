@@ -3,12 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TelegramApp.Services;
 using TeleSharp.TL;
-using TeleSharp.TL.Contacts;
-using TeleSharp.TL.Messages;
 using TLSharp.Core;
-using TLSharp.Core.Exceptions;
-using System.Configuration;
 using System.Diagnostics;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace TelegramApp
 {
@@ -21,12 +19,16 @@ namespace TelegramApp
         private static int TargetUserId { get; set; }
         private static string Message { get; set; }
 
-        public static TelegaService _service;
+        public static TelegaService _telegaService;
+        public static ConfigService _configService;
         
 
         static async Task Main(string[] args)
         {
             Console.WriteLine("Start app");
+
+            _configService = new ConfigService();
+            _configService.Initialization();
 
             //Getting configuration
             GetConfig();
@@ -37,7 +39,7 @@ namespace TelegramApp
             //Getting target user
             var targetUser = await GetTargetUser(client);
 
-            var result = await _service.SendMessage(client, targetUser, Message);
+            var result = await _telegaService.SendMessage(client, targetUser, Message);
 
             if (result)
             {
@@ -49,14 +51,14 @@ namespace TelegramApp
         #region Initialization and Get client
         private static async Task<TelegramClient> Initialization()
         {
-            _service = new TelegaService(ApiId, ApiHash, NumberToAuthenticate, PasswordToAuthenticate);
+            _telegaService = new TelegaService(ApiId, ApiHash, NumberToAuthenticate, PasswordToAuthenticate);
 
             Console.WriteLine("Attempting to create a client...");
-            var client = _service.NewClient();
+            var client = _telegaService.NewClient();
 
             try
             {
-                var user = await _service.Connect(client);
+                var user = await _telegaService.Connect(client);
 
                 Console.WriteLine("User received!");
 
@@ -74,32 +76,25 @@ namespace TelegramApp
         private static void GetConfig()
         {
             string appConfigMsgWarning = "{0} not configured in app.config! Some tests may fail.";
+            var config = _configService.GetAllSetting();
 
-            var apiId = ConfigurationManager.AppSettings[nameof(ApiId)];
-            if (string.IsNullOrEmpty(apiId))
-                Debug.WriteLine(appConfigMsgWarning, nameof(ApiId));
-            else
-                ApiId = int.Parse(apiId);
+            ApiId = config.ApiId;
 
-            ApiHash = ConfigurationManager.AppSettings[nameof(ApiHash)];
+            ApiHash = config.ApiHash;
             if (string.IsNullOrEmpty(ApiHash))
                 Debug.WriteLine(appConfigMsgWarning, nameof(ApiHash));
 
-            NumberToAuthenticate = ConfigurationManager.AppSettings[nameof(NumberToAuthenticate)];
+            NumberToAuthenticate = config.NumberToAuthenticate;
             if (string.IsNullOrEmpty(NumberToAuthenticate))
                 Debug.WriteLine(appConfigMsgWarning, nameof(NumberToAuthenticate));
 
-            PasswordToAuthenticate = ConfigurationManager.AppSettings[nameof(PasswordToAuthenticate)];
+            PasswordToAuthenticate = config.PasswordToAuthenticate;
             if (string.IsNullOrEmpty(PasswordToAuthenticate))
                 Debug.WriteLine(appConfigMsgWarning, nameof(PasswordToAuthenticate));
 
-            var targetUserID = ConfigurationManager.AppSettings[nameof(TargetUserId)];
-            if (string.IsNullOrEmpty(apiId))
-                Debug.WriteLine(appConfigMsgWarning, nameof(TargetUserId));
-            else
-                TargetUserId = int.Parse(targetUserID);
+            TargetUserId = config.TargetUserID;
 
-            Message = ConfigurationManager.AppSettings[nameof(Message)];
+            Message = config.Message;
             if (string.IsNullOrEmpty(Message))
                 Debug.WriteLine(appConfigMsgWarning, nameof(Message));
 
@@ -108,7 +103,7 @@ namespace TelegramApp
 
         private static async Task<TLUser> GetTargetUser(TelegramClient client)
         {
-            var dialogs = await _service.GetDialogs(client);
+            var dialogs = await _telegaService.GetDialogs(client);
 
             var targetUser = dialogs.Users.OfType<TLUser>().FirstOrDefault(x => x.Id == TargetUserId);
 
