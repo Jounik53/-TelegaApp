@@ -5,9 +5,8 @@ using TelegramApp.Services;
 using TeleSharp.TL;
 using TLSharp.Core;
 using System.Diagnostics;
-using System.Configuration;
-using System.Collections.Specialized;
-using System.Timers;
+using System.Threading;
+
 
 namespace TelegramApp
 {
@@ -26,8 +25,8 @@ namespace TelegramApp
         public static TelegaService _telegaService;
         public static ConfigService _configService;
 
-        private static Timer aTimer;
-        private static int interval = 10800000;
+        private static Timer _timer;
+        private static int period = 10800000;
 
         static async Task Main(string[] args)
         {
@@ -45,8 +44,11 @@ namespace TelegramApp
             //Getting target user
             targetUser = await GetTargetUser(client);
 
+            //start timer
+            _timer = new Timer(CallSend, null, 0, period);
+
             Console.WriteLine("Start send by timer: ");
-            SetTimer();
+            Console.ReadKey();
 
         }
 
@@ -130,17 +132,7 @@ namespace TelegramApp
             }
         }
 
-        private static void SetTimer()
-        {
-            // Create a timer with a two second interval.
-            aTimer = new System.Timers.Timer(interval);
-            // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-        }
-
-        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        public static void CallSend(object obj)
         {
             SendMessageByInterval().GetAwaiter().GetResult();
         }
