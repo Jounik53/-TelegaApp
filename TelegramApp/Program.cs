@@ -14,7 +14,7 @@ namespace TelegramApp
     {
         public static int _apiID = 1901606;
         public static string _apiHash = "db347a73b1919868fa2ff1bfc4fb76dd";
-        public static string _number = "+79887687607";
+        public static string _numberAccount = "+79887687607";
         public static string _passTelegramm = "283647";
         public static int _targetUser = 1385739983;
         public static string _targetName = "OMGBOT";
@@ -23,7 +23,7 @@ namespace TelegramApp
 
         static async Task Main(string[] args)
         {
-            var service = new TelegaService(_apiID, _apiHash);
+            var service = new TelegaService(_apiID, _apiHash,_numberAccount, _passTelegramm);
             TLUser targetUser;
             Console.WriteLine("Запуск приложения!");
 
