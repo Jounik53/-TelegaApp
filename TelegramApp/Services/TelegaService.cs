@@ -12,17 +12,17 @@ namespace TelegramApp.Services
 {
     class TelegaService: ITelegaService
     {
-        private static int _apiID;
-        private static string _apiHash;
-        private static string _numberAccount;
-        public static string _passTelegram;
+        private static int ApiId;
+        private static string ApiHash;
+        private static string NumberToAuthenticate;
+        private static string PasswordToAuthenticate;
 
-        public TelegaService(int apiID, string apiHash, string numberAccount, string passTelegram)
+        public TelegaService(int apiID, string apiHash, string numberToAuthenticate, string passwordToAuthenticate)
         {
-            _apiID = apiID;
-            _apiHash = apiHash;
-            _numberAccount = numberAccount;
-            _passTelegram = passTelegram;
+            ApiId = apiID;
+            ApiHash = apiHash;
+            NumberToAuthenticate = numberToAuthenticate;
+            PasswordToAuthenticate = passwordToAuthenticate;
         }
 
 
@@ -30,7 +30,7 @@ namespace TelegramApp.Services
         {
             try
             {
-                return new TelegramClient(_apiID, _apiHash);
+                return new TelegramClient(ApiId, ApiHash);
             }
             catch (MissingApiConfigurationException ex)
             {
@@ -56,7 +56,7 @@ namespace TelegramApp.Services
         {
             await client.ConnectAsync();
 
-            var hash = await client.SendCodeRequestAsync(_numberAccount);
+            var hash = await client.SendCodeRequestAsync(NumberToAuthenticate);
 
             Console.WriteLine("Ввести код из приложения: ");
             var code = Console.ReadLine();
@@ -70,12 +70,12 @@ namespace TelegramApp.Services
             TLUser user = null;
             try
             {
-                user = await client.MakeAuthAsync(_numberAccount, hash, code);
+                user = await client.MakeAuthAsync(NumberToAuthenticate, hash, code);
             }
             catch (CloudPasswordNeededException ex)
             {
                 var passwordSetting = await client.GetPasswordSetting();
-                var password = _passTelegram;
+                var password = PasswordToAuthenticate;
 
                 user = await client.MakeAuthWithPasswordAsync(passwordSetting, password);
             }
