@@ -26,7 +26,8 @@ namespace TelegramApp
         public static ConfigService _configService;
 
         private static Timer _timer;
-        private static int period = 10800000;
+        //private static int period = 10800000;
+        private static int period = 600000;
 
         static async Task Main(string[] args)
         {

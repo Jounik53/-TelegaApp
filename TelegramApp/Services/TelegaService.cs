@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using TeleSharp.TL;
 using TeleSharp.TL.Contacts;
@@ -30,12 +28,11 @@ namespace TelegramApp.Services
         {
             try
             {
-                return new TelegramClient(ApiId, ApiHash);
+                return new TelegramClient(ApiId, ApiHash, new FileSessionStore());
             }
             catch (MissingApiConfigurationException ex)
             {
-                throw new Exception($"Please add your API settings to the `app.config.json` file.",
-                    ex);
+                throw new Exception($"Please add your API settings to the `app.config.json` file.", ex);
             }
         }
 
@@ -43,48 +40,55 @@ namespace TelegramApp.Services
         {
             try
             {
-                return new TelegramClient(apiId, apiHash);
+                return new TelegramClient(apiId, apiHash, new FileSessionStore());
             }
             catch (MissingApiConfigurationException ex)
             {
-                throw new Exception($"Please add your API settings to the `app.config` file. (More info: {MissingApiConfigurationException.InfoUrl})",
-                    ex);
+                throw new Exception($"Please add your API settings to the `app.config` file. (More info: {MissingApiConfigurationException.InfoUrl})", ex);
             }
         }
 
         public async Task<TLUser> Connect(TelegramClient client)
         {
-            await client.ConnectAsync();
+            await client.ConnectAsync(true);
 
-            var hash = await client.SendCodeRequestAsync(NumberToAuthenticate);
-
-            Console.WriteLine("Enter SMS/Telegram code: ");
-            var code = Console.ReadLine();
-
-            if (String.IsNullOrWhiteSpace(code))
-            {
-                Console.WriteLine("CodeToAuthenticate is empty in the app.config file, fill it with the code you just got now by SMS/Telegram");
-            }
-
-            Console.WriteLine("Getting user...");
             TLUser user = null;
-            try
-            {
-                user = await client.MakeAuthAsync(NumberToAuthenticate, hash, code);
-            }
-            catch (CloudPasswordNeededException ex)
-            {
-                var passwordSetting = await client.GetPasswordSetting();
-                var password = PasswordToAuthenticate;
 
-                user = await client.MakeAuthWithPasswordAsync(passwordSetting, password);
-            }
-            catch (InvalidPhoneCodeException ex)
+            if (client.Session.AuthKey == null)
             {
-                Console.WriteLine("CodeToAuthenticate is wrong in the app.config file, fill it with the code you just got now by SMS/Telegram",
-                    ex);
-            }
+                var hash = await client.SendCodeRequestAsync(NumberToAuthenticate);
 
+                Console.WriteLine("Enter SMS/Telegram code: ");
+                var code = Console.ReadLine();
+
+                if (String.IsNullOrWhiteSpace(code))
+                {
+                    Console.WriteLine("CodeToAuthenticate is empty in the app.config file, fill it with the code you just got now by SMS/Telegram");
+                }
+
+                Console.WriteLine("Getting user...");
+               
+                try
+                {
+                    user = await client.MakeAuthAsync(NumberToAuthenticate, hash, code);
+                }
+                catch (CloudPasswordNeededException ex)
+                {
+                    var passwordSetting = await client.GetPasswordSetting();
+                    var password = PasswordToAuthenticate;
+
+                    user = await client.MakeAuthWithPasswordAsync(passwordSetting, password);
+                }
+                catch (InvalidPhoneCodeException ex)
+                {
+                    Console.WriteLine("CodeToAuthenticate is wrong in the app.config file, fill it with the code you just got now by SMS/Telegram", ex);
+                }
+            }
+            else
+            {
+                user = client.Session.TLUser;
+            }
+            
             return user;
         }
 
